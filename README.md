@@ -1,7 +1,7 @@
 # Ecovis-Datalake
 Proyecto de PipeLine ETL para prueba de ECOVIS.
 
-#¿Cómo ejecutar la pipeline?
+# ¿Cómo ejecutar la pipeline?
 Para ejecutar la pipeline diseñada para esta prueba es necesario
 1. Crear un entorno en Google Cloud Composer el cual corra apache airflow configurando la locación en "us-central1" y esperar que termine la creación.
 2. Cargar el archivo Temp.py al bucket creado por el entorno
@@ -10,11 +10,12 @@ Para ejecutar la pipeline diseñada para esta prueba es necesario
 5. Dentro de AirFlow en la pestaña de DAGs dar clic en el dag de "extract_to_data_lake" y activar el dag y el auto-refresh
 6. Monitorear que se están ejecutando todas las tareas programads correctamente de la pipeline
 
-#Explicación de la solución
+# Explicación de la solución
 Para realizar esta solución se optó por usar apache Airflow debido a que es OpenSource y es fácil para integrar con otras tecnologías. Como proveedor de almacenamiento Data-Lake se eligió a Google Cloud por tener muchas soluciones integradas dentro de su entorno entre ellas Cloud Storage y BigQuery, además del impacto en la actualidad que está teniendo el cómputo en la nube de Google.
 
 Apache Airflow funciona por medio de los DAG (Directed Acyclic Graph) que establecen un flujo de tareas para la ejecución y contrucción de una pipeLine. En su mayoría el DAG trabaja con Python dependiendo de los operadores que se elijan para hacer ciertas funciones.
 
+## Librerías utilizadas
 Las librerías que se importaron para la solución con sus usos son:
 * DAG: Para la creación del DAG
 * pandas: Para la limpieza de los datos
@@ -30,7 +31,7 @@ Las librerías que se importaron para la solución con sus usos son:
 * datetime, timedelta: se usan para establecer los parámetros iniciales del DAG
 * StringIO: Se usa para poder transformar los datos de un HTTP a CSV
 
-#Flujo del pipeline
+##Flujo del pipeline
 1. Lo primero que se hizo en el flujo de la pipeline fue dar inicio por medio de un dummyoperator vacío
 2. Crear un bucket de Google Cloud Storage
 3. Extraer el archivo us.csv de el repositorio de github https://github.com/nytimes/covid-19-data/blob/master/us.csv y almacenarlo en el bucket de Google Cloud previamente creado.
@@ -43,3 +44,6 @@ Las librerías que se importaron para la solución con sus usos son:
 10. Finalizar la pipeline
 
 Las consultas para el final de la pipeline se encuentran almacenadas como archivos .sql y están escritas para ser interpretadas por Google BigQuery. Estas consultas se ejecutan en simultáneo antes de dar fin al pipeline.
+
+**Solución Creada por**
+***Jorge Daniel Gomez Vanegas - Ingeniero de Sistemas de la Universidad Distrital Francisco José de Caldas***
