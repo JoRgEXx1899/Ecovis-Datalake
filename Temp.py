@@ -6,7 +6,7 @@ from airflow.providers.google.cloud.operators.gcs import GCSCreateBucketOperator
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import PythonOperator
 from airflow.providers.google.cloud.hooks.gcs import GCSHook
-from airflow.providers.google.cloud.operators.bigquery import BigQueryCreateEmptyTableOperator
+from airflow.providers.google.cloud.operators.bigquery import BigQueryCreateEmptyTableOperator,BigQueryCreateEmptyDatasetOperator
 from airflow.contrib.operators.gcs_to_bq import GoogleCloudStorageToBigQueryOperator
 from airflow.contrib.operators.bigquery_operator import BigQueryOperator
 from datetime import datetime, timedelta
@@ -138,6 +138,14 @@ clean_data = PythonOperator(
     dag=dag
 )
 
+create_new_dataset = BigQueryCreateEmptyDatasetOperator(
+    dataset_id=bIGQUERY_DATASET_NAME,
+    project_id=gCP_PROJECT_ID,
+    dataset_reference={"friendlyName": "Dataset info Covid-19 USA"},
+    task_id='newDatasetCreator',
+    dag=dag
+)
+
 #Tarea de creación de tabla en BigQuery con estructira definida
 create_table_task = BigQueryCreateEmptyTableOperator(
     task_id='create_table',
@@ -225,4 +233,4 @@ finish_pipeline = DummyOperator(
 
 #Definición de el flujo de tareas
 start_pipeline>>create_gcs_bucket_task >> [github_to_gcs_task,clean_data]
-clean_data >> create_table_task >> load_to_bq >> [consulta_cym_mes_total,consulta_cym_mes_promedio,top_5_casos_nuevos,top_5_muertes_nuevas]>>finish_pipeline
+clean_data >>create_new_dataset>> create_table_task >> load_to_bq >> [consulta_cym_mes_total,consulta_cym_mes_promedio,top_5_casos_nuevos,top_5_muertes_nuevas]>>finish_pipeline
