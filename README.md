@@ -31,7 +31,7 @@ Las librerías que se importaron para la solución con sus usos son:
 * datetime, timedelta: se usan para establecer los parámetros iniciales del DAG
 * StringIO: Se usa para poder transformar los datos de un HTTP a CSV
 
-##Flujo del pipeline
+## Flujo del pipeline
 1. Lo primero que se hizo en el flujo de la pipeline fue dar inicio por medio de un dummyoperator vacío
 2. Crear un bucket de Google Cloud Storage
 3. Extraer el archivo us.csv de el repositorio de github https://github.com/nytimes/covid-19-data/blob/master/us.csv y almacenarlo en el bucket de Google Cloud previamente creado.
@@ -46,4 +46,5 @@ Las librerías que se importaron para la solución con sus usos son:
 Las consultas para el final de la pipeline se encuentran almacenadas como archivos .sql y están escritas para ser interpretadas por Google BigQuery. Estas consultas se ejecutan en simultáneo antes de dar fin al pipeline.
 
 **Solución Creada por**
+
 ***Jorge Daniel Gomez Vanegas - Ingeniero de Sistemas de la Universidad Distrital Francisco José de Caldas***
